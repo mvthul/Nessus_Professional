@@ -24,6 +24,24 @@ echo " o antiskid extra thing added removing all chattr 20231013"
 chattr -i -R /opt/nessus
 echo " o making sure we have prerequisites.."
 apt update &>/dev/null
+echo " o stopping old nessusd in case there is one!"
+/bin/systemctl stop nessusd.service &>/dev/null
+echo " o downloading Nessus.."
+curl -A Mozilla --request GET \
+  --url 'https://www.tenable.com/downloads/api/v2/pages/nessus/files/Nessus-latest-debian10_amd64.deb' \
+  --output 'Nessus-latest-debian10_amd64.deb' &>/dev/null
+{ if [ ! -f Nessus-latest-debian10_amd64.deb ]; then
+  echo " o nessus download failed :/ exiting. get copy of it from t.me/pwn3rzs"
+  exit 0
+fi }
+echo " o installing Nessus.."
+dpkg -i Nessus-latest-debian10_amd64.deb &>/dev/null
+# look I tried to just make changes and run but it doesnt work. if you can optimize
+# what im doing here, let me know.  but this was it for me, it had to be run once :/
+echo " o starting service once FIRST TIME INITIALIZATION (we have to do this)"
+/bin/systemctl start nessusd.service &>/dev/null
+echo " o let's allow Nessus time to initalize - we'll give it like 20 seconds..."
+sleep 20
 apt -y install curl wget dpkg expect &>/dev/null
 echo " o stopping the nessus service.."
 /bin/systemctl stop nessusd.service &>/dev/null
