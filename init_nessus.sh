@@ -109,7 +109,7 @@ echo "                             you can change this any time"
 
 # Step 2: Copy files to /temporary
 echo "Copying files from /opt/nessus to /temporary..."
-cp -n -R /opt/nessus/* /temporary/
+cp -n -R -v /opt/nessus/* /temporary/
 
 # Step 3: Mark initialization as done
 touch /temporary/.init-done
