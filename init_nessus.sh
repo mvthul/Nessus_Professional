@@ -24,7 +24,7 @@ echo " o antiskid extra thing added removing all chattr 20231013"
 chattr -i -R /opt/nessus
 echo " o making sure we have prerequisites.."
 apt update &>/dev/null
-apt -y install curl dpkg expect &>/dev/null
+apt -y install curl wget dpkg expect &>/dev/null
 echo " o stopping the nessus service.."
 /bin/systemctl stop nessusd.service &>/dev/null
 echo " o changing nessus settings to Zen preferences (freedom fighter mode)"
